@@ -21,11 +21,15 @@
   },
   "homepage": "https://github.com/preaksneview/nyt-scraper#readme",
   "devDependencies": {
+    "chai": "^4.1.2",
     "concurrently": "^3.5.1",
+    "mocha": "^5.0.5",
     "nodemon": "^1.17.3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mongoose": "^5.0.12"
   }
 }
