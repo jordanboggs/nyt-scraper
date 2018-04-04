@@ -2,11 +2,11 @@
 const db = require('../models');
 
 module.exports = {
-  // Post a Note associated with a Headline
+  // Post a Note associated with a Article
   postNote: function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
-      return db.Headline.findOneAndUpdate({
+      return db.Article.findOneAndUpdate({
         _id: req.params.id,
       }, {
         $push: {
@@ -16,8 +16,8 @@ module.exports = {
         new: true
       });
     })
-    .then(function(dbHeadline) {
-      res.json(dbHeadline);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch((err) => res.json(err));
   },

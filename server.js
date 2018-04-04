@@ -29,7 +29,7 @@ app.get("*", function(req, res) {
 });
 
 // Configure mongo for Heroku or dev environment
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytreact";
 
 // Tell mongoose to return Promises
 mongoose.Promise = Promise;

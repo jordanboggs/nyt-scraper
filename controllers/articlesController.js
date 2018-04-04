@@ -3,22 +3,27 @@ const db = require('../models');
 const axios = require('axios');
 
 module.exports = {
-  // Populate page with Headlines
-  populateHeadlines: function(req, res) {
-    db.Headline
+  // Populate page with saved Articles
+  populateArticles: function(req, res) {
+    db.Article
       .find({})
       .sort({created_at: -1})
-      .then((dbHeadline) => res.json(dbHeadline))
+      .then((dbArticle) => res.json(dbArticle))
       .catch((err) => res.json(err));
   },
-  // Grab specific Headline by id, populate with its note
-  grabHeadline: function(req, res) {
-    db.Headline
-      .find({
-       _id: req.params.id
-      })
-      .populate("notes")
-      .then((dbHeadline) => res.json(dbHeadline))
-      .catch((err) => res.json(err));
+  // Save an article to database
+  saveArticle: function(req, res) {
+    db.Article
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   },
+  // Delete an article from database
+  deleteArticle: function(req, res) {
+    db.Article
+      .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  }
 };

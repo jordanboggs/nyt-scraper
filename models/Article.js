@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const HeadlineSchema = new Schema({
+const ArticleSchema = new Schema({
   title: {
     type    : String,
     required: true,
@@ -12,8 +12,10 @@ const HeadlineSchema = new Schema({
     required: true,
     unique  : true
   },
-  description: {
-    type: String
+  date_posted: {
+    type    : Date,
+    required: true,
+    unique  : false
   },
   notes: [
     {
@@ -28,6 +30,6 @@ const HeadlineSchema = new Schema({
     default : Date.now }
 });
 
-const Article = mongoose.model("Headline", HeadlineSchema);
+const Article = mongoose.model("Article", ArticleSchema);
 
 module.exports = Article;
