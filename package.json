@@ -1,0 +1,31 @@
+{
+  "name": "nyt-scraper",
+  "version": "1.0.0",
+  "description": "MERN stack app",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js",
+    "client": "node scripts/start-client.js",
+    "start": "concurrently \"nodemon server.js\" \"npm run client\"",
+    "build": "node scripts/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/preaksneview/nyt-scraper.git"
+  },
+  "author": "Jordan Boggs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/preaksneview/nyt-scraper/issues"
+  },
+  "homepage": "https://github.com/preaksneview/nyt-scraper#readme",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}
