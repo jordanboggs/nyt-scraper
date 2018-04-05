@@ -11,7 +11,7 @@ class Articles extends Component {
   }
 
   componentDidMount() {
-    this.loadArticles;
+    this.loadArticles();
   }
 
   // Load Articles from databse
