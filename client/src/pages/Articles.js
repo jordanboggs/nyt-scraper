@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import API from '../utils/API';
 import { Container, Row } from "../components/Grid";
-import Jumbotron from "../components/Jumbotron";
+import SearchForm from "../components/SearchForm";
 import { ArticleList, ArticleListItem } from "../components/List";
 
 class Articles extends Component {
   // Initialize this.state.articles as empty array
   state = {
-    articles: []
+    savedArticles: [],
+    searchedArticles: [],
   }
 
   componentDidMount() {
@@ -16,28 +17,41 @@ class Articles extends Component {
 
   // Load Articles from databse
   loadArticles = () => {
-    API.getArticles()
+    API.getSavedArticles()
     .then((res) => {
-      // this.setState({ articles: res.data });
-      console.log("articles", res.data);
+      this.setState({ articles: res.data });
     })
     .catch((err) => console.error(err));
+  }
+
+  searchArticles = (articleArray) => {
+    this.setState({searchedArticles: articleArray});
+    console.log("articleArray",articleArray);
+    console.log("this.state.searchedArticles",this.state.searchedArticles);
   }
 
   render() {
     return (
       <Container>
         <Row>
-          <Jumbotron>
-            <h1>Welcome!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris faucibus augue sem, nec pellentesque purus finibus nec. Mauris ut pulvinar mi, sit amet interdum lorem. Duis vel fermentum purus. Suspendisse et efficitur sapien. Donec aliquet augue id nulla suscipit ultricies. Mauris eros lectus, ullamcorper et dapibus nec, porttitor vitae mi. Nullam lacinia venenatis ipsum non venenatis. Morbi feugiat dui ut metus mattis consectetur.</p>
-          </Jumbotron>
+          <SearchForm searchArticles={this.searchArticles.bind(this)} />
         </Row>
         <Row>
-          {this.state.articles.length ? (
+          {this.state.searchedArticles.length ? (
+            <ArticleList id="search-results">
+              
+            </ArticleList>
+          ) : (
+            <div id="search-results"></div>
+          )}
+        </Row>
+        <Row>
+          {this.state.savedArticles.length ? (
             <ArticleList>
               {this.state.articles.map((article) => (
-                <ArticleListItem key={article._id}>
+                <ArticleListItem 
+                  id="saved-articles"
+                  key={article._id}>
                   <a href={article.link} 
                      id={article._id} 
                      target="_blank">{article.title}
