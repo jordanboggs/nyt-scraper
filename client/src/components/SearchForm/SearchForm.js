@@ -41,8 +41,8 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <div className="search-form">
-        <h2>Search</h2>
+      <div className="search-form col-sm col-lg-9 mt-2 mb-2">
+        <h2 className="bg-primary text-white p-1">Search</h2>
         <form>
           <div className="form-group">
             <label htmlFor="topic">Topic</label>

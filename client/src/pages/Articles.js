@@ -19,15 +19,23 @@ class Articles extends Component {
   loadArticles = () => {
     API.getSavedArticles()
     .then((res) => {
-      this.setState({ articles: res.data });
+      this.setState({ savedArticles: res.data });
     })
     .catch((err) => console.error(err));
   }
 
   searchArticles = (articleArray) => {
     this.setState({searchedArticles: articleArray});
-    console.log("articleArray",articleArray);
-    console.log("this.state.searchedArticles",this.state.searchedArticles);
+    // console.log(articleArray);
+  }
+
+  saveArticle = (title, link, datePosted) => {
+    let articleData = {
+      title: title,
+      link: link,
+      date_posted: datePosted
+    }
+    API.saveArticle(articleData);
   }
 
   render() {
@@ -39,18 +47,33 @@ class Articles extends Component {
         <Row>
           {this.state.searchedArticles.length ? (
             <ArticleList id="search-results">
-              
+              <h2 className="bg-primary text-white p-1">Search Results</h2>
+              {this.state.searchedArticles.map((article, index) => (
+                <ArticleListItem
+                  key={index}>
+                  <a href={article.web_url}
+                     target="_blank"
+                  >
+                    <strong>{article.headline.main}</strong>
+                  </a>
+                  <p>{article.abstract}</p>
+                  <button 
+                    className="btn btn-primary mb-1"
+                    onClick={this.saveArticle(article.headline.main, article.web_url, article.pub_date)}
+                  >Save</button>
+                </ArticleListItem>
+              ))}
             </ArticleList>
           ) : (
-            <div id="search-results"></div>
+            <div></div>
           )}
         </Row>
         <Row>
           {this.state.savedArticles.length ? (
             <ArticleList>
-              {this.state.articles.map((article) => (
+              <h2 className="bg-primary text-white p-1">Saved Articles</h2>
+              {this.state.savedArticles.map((article) => (
                 <ArticleListItem 
-                  id="saved-articles"
                   key={article._id}>
                   <a href={article.link} 
                      id={article._id} 
@@ -61,7 +84,7 @@ class Articles extends Component {
               ))}
             </ArticleList>
           ) : (
-            <h3>No articles to display.</h3>
+            <div>No saved articles to display.</div>
           )}
         </Row>
       </Container> 
