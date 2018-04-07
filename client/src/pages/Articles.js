@@ -30,23 +30,29 @@ class Articles extends Component {
   }
 
   saveArticle = (event) => {
+    const self = this;
+
     let articleData = {
       title: event.target.getAttribute('data-title'), 
       link: event.target.getAttribute('data-link'), 
       date_posted: event.target.getAttribute('data-date-posted')
     }
-    API.saveArticle(articleData);
-    
-    // reload article
-    this.loadSavedArticles();
+    API.saveArticle(articleData)
+      .then(function() {
+        // reload article
+        self.loadSavedArticles();
+      });
   }
 
   deleteArticle = (event) => {
-    let articleId = event.target.id;
-    API.deleteArticle(articleId);
-
-    // reload saved article section
-    this.loadSavedArticles();
+    const self= this;
+    
+    let articleId = event.target.getAttribute('data-article-id');
+    API.deleteArticle(articleId)
+      .then(function() {
+        // reload article
+        self.loadSavedArticles();
+      });
   }
 
   render() {
@@ -96,10 +102,10 @@ class Articles extends Component {
                   </a>
                   <p>{article.description}</p>
                   <button 
-                    id={article._id}
-                    className="btn btn-warning mb-1"
+                    data-article-id={article._id}
+                    className="btn btn-danger mb-1"
                     onClick={this.deleteArticle}
-                  >Delete</button>
+                  >Delete Article</button>
                 </ArticleListItem>
               ))}
             </ArticleList>
