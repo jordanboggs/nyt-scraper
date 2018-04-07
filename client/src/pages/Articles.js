@@ -29,20 +29,23 @@ class Articles extends Component {
     // console.log(articleArray);
   }
 
-  saveArticle = (title, link, datePosted) => {
+  saveArticle = (event) => {
     let articleData = {
-      title: title,
-      link: link,
-      date_posted: datePosted
+      title: event.target.getAttribute('data-title'), 
+      link: event.target.getAttribute('data-link'), 
+      date_posted: event.target.getAttribute('data-date-posted')
     }
     API.saveArticle(articleData);
+    
+    // reload article
+    this.loadArticles();
   }
 
   render() {
     return (
       <Container>
         <Row>
-          <SearchForm searchArticles={this.searchArticles.bind(this)} />
+          <SearchForm searchArticles={this.searchArticles} />
         </Row>
         <Row>
           {this.state.searchedArticles.length ? (
@@ -58,8 +61,12 @@ class Articles extends Component {
                   </a>
                   <p>{article.abstract}</p>
                   <button 
+                    id="article-{index}"
                     className="btn btn-primary mb-1"
-                    onClick={this.saveArticle(article.headline.main, article.web_url, article.pub_date)}
+                    data-title={article.headline.main}
+                    data-link={article.web_url}
+                    data-date-posted={article.pub_date}
+                    onClick={this.saveArticle}
                   >Save</button>
                 </ArticleListItem>
               ))}

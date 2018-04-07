@@ -41,10 +41,10 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <div className="search-form col-sm col-lg-9 mt-2 mb-2">
+      <div className="search-form col-sm offset-lg-2 col-lg-8 p-0 mt-2 mb-2 bg-light">
         <h2 className="bg-primary text-white p-1">Search</h2>
         <form>
-          <div className="form-group">
+          <div className="form-group ml-1 mr-1">
             <label htmlFor="topic">Topic</label>
             <input type="text" 
                    className="form-control" 
@@ -53,7 +53,7 @@ class SearchForm extends Component {
                    onChange={this.handleInputChange}
                    placeholder="Enter search term" />
           </div>
-          <div className="form-group">
+          <div className="form-group ml-1 mr-1">
             <label htmlFor="start-year">Start Year</label>
             <input type="text" 
                    className="form-control" 
@@ -62,7 +62,7 @@ class SearchForm extends Component {
                    onChange={this.handleInputChange}
                    placeholder="Enter start year for search" />
           </div>
-          <div className="form-group">
+          <div className="form-group ml-1 mr-1">
             <label htmlFor="end-year">End Year</label>
             <input type="text" 
                    className="form-control" 
@@ -72,7 +72,7 @@ class SearchForm extends Component {
                    placeholder="Enter end year for search" />
           </div>
           <button type="submit" 
-                  className="btn btn-primary"
+                  className="btn btn-primary ml-1 mr-1 mb-1"
                   onClick={this.handleFormSubmit}
                   >Submit</button>
         </form>
