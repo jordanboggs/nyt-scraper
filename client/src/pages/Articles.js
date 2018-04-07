@@ -12,11 +12,11 @@ class Articles extends Component {
   }
 
   componentDidMount() {
-    this.loadArticles();
+    this.loadSavedArticles();
   }
 
   // Load Articles from databse
-  loadArticles = () => {
+  loadSavedArticles = () => {
     API.getSavedArticles()
     .then((res) => {
       this.setState({ savedArticles: res.data });
@@ -30,15 +30,29 @@ class Articles extends Component {
   }
 
   saveArticle = (event) => {
+    const self = this;
+
     let articleData = {
       title: event.target.getAttribute('data-title'), 
       link: event.target.getAttribute('data-link'), 
       date_posted: event.target.getAttribute('data-date-posted')
     }
-    API.saveArticle(articleData);
+    API.saveArticle(articleData)
+      .then(function() {
+        // reload article
+        self.loadSavedArticles();
+      });
+  }
+
+  deleteArticle = (event) => {
+    const self= this;
     
-    // reload article
-    this.loadArticles();
+    let articleId = event.target.getAttribute('data-article-id');
+    API.deleteArticle(articleId)
+      .then(function() {
+        // reload article
+        self.loadSavedArticles();
+      });
   }
 
   render() {
@@ -87,6 +101,11 @@ class Articles extends Component {
                      target="_blank">{article.title}
                   </a>
                   <p>{article.description}</p>
+                  <button 
+                    data-article-id={article._id}
+                    className="btn btn-danger mb-1"
+                    onClick={this.deleteArticle}
+                  >Delete Article</button>
                 </ArticleListItem>
               ))}
             </ArticleList>
