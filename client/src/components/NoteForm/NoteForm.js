@@ -27,10 +27,14 @@ class NotesForm extends Component {
     let noteBody = {
       body: this.state.noteBody
     };
-    console.log("noteBody",noteBody);
+    
 
     API.saveNote(articleId, noteBody)
       .then(function() {
+        // Clear the form
+        self.setState({ noteBody: "" });
+
+        // Reload articles w/ saved Notes
         self.props.loadSavedArticles();
       });
   }
