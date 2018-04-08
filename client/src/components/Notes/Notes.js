@@ -27,20 +27,32 @@ class Notes extends Component {
   }
 
   deleteNote = () => {
+    let self = this;
+    
     API.deleteNote(this.state.noteId, this.state.articleId)
     .then(() => {
-      // Reload note
-      this.getNote();
+      // Reload articles
+      self.props.loadSavedArticles();
     })
   }
 
   render() {
     return(
-      <section className="note-section">
+      <section className="border-top
+                          border-bottom
+                          border-white
+                          ml-5
+                          mr-5
+                          pl-5
+                          pr-5
+                          d-flex
+                          flex-row
+                          justify-content-between
+                          align-items-center">
         <p>{this.state.noteBody}</p>
         <button className="btn btn-warning"
                 onClick={this.deleteNote}
-        >Delete Note</button>
+        >✕</button>
       </section>
     );
   }
