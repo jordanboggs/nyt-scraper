@@ -4,6 +4,7 @@ import API from "../../utils/API";
 class NotesForm extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       articleId: this.props.article._id,
       noteBody: ""
@@ -36,6 +37,7 @@ class NotesForm extends Component {
 
         // Reload articles w/ saved Notes
         self.props.loadSavedArticles();
+        self.props.handler();
       });
   }
 
@@ -54,6 +56,10 @@ class NotesForm extends Component {
                     className="btn btn-primary ml-1 mr-1 mb-1"
                     onClick={this.addNote}
             >Submit</button>
+            <button type="button" 
+                    class="btn btn-outline-secondary ml-1 mr-1 mb-1"
+                    onClick={this.props.handler}
+            >Cancel</button>
           </div>
         </form>
       </section>

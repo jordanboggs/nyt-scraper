@@ -11,6 +11,7 @@ class Articles extends Component {
   state = {
     savedArticles: [],
     searchedArticles: [],
+    noteFormId: ""
   }
 
   componentDidMount() {
@@ -57,6 +58,20 @@ class Articles extends Component {
       });
   }
 
+  showNoteForm = (event) => {
+    event.preventDefault();
+
+    let articleId = event.target.getAttribute('data-article-id');
+
+    this.setState({ noteFormId: articleId});
+  }
+
+  noteFormHandler = (event) => {
+    // event.preventDefault();
+
+    this.setState({ noteFormId: "" });
+  }
+
   render() {
     return (
       <Container>
@@ -98,24 +113,41 @@ class Articles extends Component {
               {this.state.savedArticles.map((article) => (
                 <ArticleListItem 
                   key={article._id}>
-                  <a href={article.link} 
-                     id={article._id} 
-                     target="_blank">{article.title}
-                  </a>
-                  <p>{article.description}</p>
-                  <button 
-                    data-article-id={article._id}
-                    className="btn btn-danger mb-1"
-                    onClick={this.deleteArticle}
-                  >Delete Article</button>
+                  <div className="d-flex 
+                                  flex-row 
+                                  justify-content-between 
+                                  align-items-baseline">
+                    <a href={article.link} 
+                      id={article._id} 
+                      target="_blank"
+                    >
+                      <strong>{article.title}</strong>
+                    </a>
+                    <button 
+                      data-article-id={article._id}
+                      className="btn btn-danger mb-1"
+                      onClick={this.deleteArticle}
+                    >Delete Article</button>
+                  </div>
                   {article.notes.map((note) => (
                     <Notes key={note}
                            noteId = {note}
-                           articleId = {article._id} />
+                           articleId = {article._id}
+                           loadSavedArticles = {this.loadSavedArticles} />
                   ))}
-                  <NoteForm article={article}
-                            loadSavedArticles={this.loadSavedArticles}
-                  />
+                  { this.state.noteFormId === article._id 
+                    ? 
+                    <NoteForm article={article}
+                              noteFormId={this.noteFormId}
+                              loadSavedArticles={this.loadSavedArticles}
+                              handler={this.noteFormHandler}
+                    />
+                    : 
+                    <button className="btn btn-primary"
+                            data-article-id = {article._id}
+                            onClick={this.showNoteForm}
+                    >Show Note Form</button>
+                  }
                 </ArticleListItem>
               ))}
             </ArticleList>
