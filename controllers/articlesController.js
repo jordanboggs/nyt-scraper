@@ -1,6 +1,5 @@
 // Require all models
 const db = require('../models');
-const axios = require('axios');
 
 module.exports = {
   // Populate page with saved Articles

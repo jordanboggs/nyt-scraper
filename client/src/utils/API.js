@@ -32,8 +32,8 @@ export default {
     return axios.delete("/api/articles/" + id);
   },
   // Saves Note to database associated with Article id
-  saveNote: function(id) {
-    return axios.post("/api/notes/" + id);
+  saveNote: function(id, text) {
+    return axios.post("/api/notes/" + id, text);
   },
   // Deletes Note with given id
   deleteNote: function(id) {
