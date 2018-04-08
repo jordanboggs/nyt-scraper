@@ -3,6 +3,8 @@ import API from '../utils/API';
 import { Container, Row } from "../components/Grid";
 import SearchForm from "../components/SearchForm";
 import { ArticleList, ArticleListItem } from "../components/List";
+import Notes from '../components/Notes';
+import NoteForm from '../components/NoteForm';
 
 class Articles extends Component {
   // Initialize this.state.articles as empty array
@@ -64,7 +66,7 @@ class Articles extends Component {
         <Row>
           {this.state.searchedArticles.length ? (
             <ArticleList id="search-results">
-              <h2 className="bg-primary text-white p-1">Search Results</h2>
+              <h2 className="bg-primary text-white mb-0 p-1">Search Results</h2>
               {this.state.searchedArticles.map((article, index) => (
                 <ArticleListItem
                   key={index}>
@@ -92,7 +94,7 @@ class Articles extends Component {
         <Row>
           {this.state.savedArticles.length ? (
             <ArticleList>
-              <h2 className="bg-primary text-white p-1">Saved Articles</h2>
+              <h2 className="bg-primary text-white mb-0 p-1">Saved Articles</h2>
               {this.state.savedArticles.map((article) => (
                 <ArticleListItem 
                   key={article._id}>
@@ -106,6 +108,14 @@ class Articles extends Component {
                     className="btn btn-danger mb-1"
                     onClick={this.deleteArticle}
                   >Delete Article</button>
+                  {article.notes.map((note) => (
+                    <Notes key={note}
+                           noteId = {note}
+                           articleId = {article._id} />
+                  ))}
+                  <NoteForm article={article}
+                            loadSavedArticles={this.loadSavedArticles}
+                  />
                 </ArticleListItem>
               ))}
             </ArticleList>

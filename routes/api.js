@@ -1,7 +1,6 @@
 // Require controllers
 const articlesController = require('../controllers/articlesController');
 const notesController = require('../controllers/notesController');
-const Notes = require('../controllers/notesController');
 const router = require('express').Router();
 
 /*
@@ -20,7 +19,11 @@ router.route('/api/articles/:id')
 
 // Route for posting and deleting Notes
 router.route('/api/notes/:id')
+  .get(notesController.getNote)
   .post(notesController.postNote)
+
+
+router.route('/api/notes/:noteId/:articleId')
   .delete(notesController.deleteNote)
 
 module.exports = router;
