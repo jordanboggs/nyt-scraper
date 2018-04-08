@@ -6,10 +6,12 @@ class Notes extends Component {
     super(props);
     this.state = {
       noteId: this.props.noteId,
-      noteBody: ''
+      noteBody: '',
+      articleId: this.props.articleId
     }
 
     this.getNote = this.getNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   componentDidMount() {
@@ -24,10 +26,21 @@ class Notes extends Component {
     .catch((err) => console.error(err));
   }
 
+  deleteNote = () => {
+    API.deleteNote(this.state.noteId, this.state.articleId)
+    .then(() => {
+      // Reload note
+      this.getNote();
+    })
+  }
+
   render() {
     return(
       <section className="note-section">
         <p>{this.state.noteBody}</p>
+        <button className="btn btn-warning"
+                onClick={this.deleteNote}
+        >Delete Note</button>
       </section>
     );
   }

@@ -110,7 +110,8 @@ class Articles extends Component {
                   >Delete Article</button>
                   {article.notes.map((note) => (
                     <Notes key={note}
-                           noteId = {note} />
+                           noteId = {note}
+                           articleId = {article._id} />
                   ))}
                   <NoteForm article={article}
                             loadSavedArticles={this.loadSavedArticles}

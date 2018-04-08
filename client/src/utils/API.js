@@ -40,7 +40,7 @@ export default {
     return axios.get("/api/notes/" + id);
   },
   // Deletes Note with given id
-  deleteNote: function(id) {
-    return axios.delete("/api/notes/" + id);
+  deleteNote: function(noteId, articleId) {
+    return axios.delete("/api/notes/" + noteId + "/" + articleId);
   }
 };

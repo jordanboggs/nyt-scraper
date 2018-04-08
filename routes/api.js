@@ -21,6 +21,9 @@ router.route('/api/articles/:id')
 router.route('/api/notes/:id')
   .get(notesController.getNote)
   .post(notesController.postNote)
+
+
+router.route('/api/notes/:noteId/:articleId')
   .delete(notesController.deleteNote)
 
 module.exports = router;
