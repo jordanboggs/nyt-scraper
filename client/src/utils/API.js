@@ -35,6 +35,10 @@ export default {
   saveNote: function(id, text) {
     return axios.post("/api/notes/" + id, text);
   },
+  // Get Note for an Article
+  getNote: function(id) {
+    return axios.get("/api/notes/" + id);
+  },
   // Deletes Note with given id
   deleteNote: function(id) {
     return axios.delete("/api/notes/" + id);

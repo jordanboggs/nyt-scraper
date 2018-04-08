@@ -9,7 +9,19 @@ class Notes extends Component {
       noteBody: ''
     }
 
-    this.addNote = this.addNote.bind(this);
+    this.getNote = this.getNote.bind(this);
+  }
+
+  componentDidMount() {
+    this.getNote();
+  }
+
+  getNote = () => {
+    API.getNote(this.state.noteId)
+    .then((res) => {
+      this.setState({ noteBody: res.data.body });
+    })
+    .catch((err) => console.error(err));
   }
 
   render() {

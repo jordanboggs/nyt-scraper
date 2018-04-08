@@ -4,24 +4,30 @@ const db = require('../models');
 module.exports = {
   // Post a Note associated with a Article
   postNote: function(req, res) {
-    console.log("req.body",req.body);
-    // db.Note
-    //   .create(req.body)
-    //   .then(function(dbNote) {
-    //     return db.Article.findOneAndUpdate({
-    //       _id: req.params.id,
-    //     }, {
-    //       $push: {
-    //         notes: dbNote._id
-    //       }
-    //     }, {
-    //       new: true
-    //     });
-    //   })
-    //   .then(function(dbArticle) {
-    //     res.json(dbArticle);
-    //   })
-    //   .catch((err) => res.json(err));
+    db.Note
+      .create(req.body)
+      .then(function(dbNote) {
+        return db.Article.findOneAndUpdate({
+          _id: req.params.id,
+        }, {
+          $push: {
+            notes: dbNote._id
+          }
+        }, {
+          new: true
+        });
+      })
+      .then(function(dbArticle) {
+        res.json(dbArticle);
+      })
+      .catch((err) => res.json(err));
+  },
+  // Gets Notes by id
+  getNote: function(req, res) {
+    db.Note
+      .findById({ _id: req.params.id })
+      .then((dbNote) => res.json(dbNote))
+      .catch((err) => res.json(err));
   },
   // Delete a Note
   deleteNote: function(req, res) {

@@ -5,22 +5,33 @@ class NotesForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articleId: this.props.article._id
+      articleId: this.props.article._id,
+      noteBody: ""
     }
 
+    this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
     this.addNote = this.addNote.bind(this);
+  }
+
+  handleNoteInputChange = (event) => {
+    this.setState({
+      noteBody: event.target.value
+    })
   }
 
   addNote = (event) => {
     event.preventDefault();
-    const self = this;
+    let self = this;
 
     let articleId = this.state.articleId;
-    console.log("noteBody",this.state.noteBody);
+    let noteBody = {
+      body: this.state.noteBody
+    };
+    console.log("noteBody",noteBody);
 
-    API.saveNote(articleId, this.state.noteBody)
+    API.saveNote(articleId, noteBody)
       .then(function() {
-        self.loadSavedArticles();
+        self.props.loadSavedArticles();
       });
   }
 
@@ -31,12 +42,11 @@ class NotesForm extends Component {
           <div className="form-group">
             <label htmlFor="noteBody">Note</label>
             <input type="text"
-                  className="form-control mb-2"
-                  name="noteBody"
-                  value={this.state.noteBody}
-                  onChange={this.handleNoteInputChange} />
+                   className="form-control mb-2"
+                   name="noteBody"
+                   value={this.state.noteBody}
+                   onChange={this.handleNoteInputChange} />
             <button type="submit"
-                    // data-article-id={this.props.article._id}
                     className="btn btn-primary ml-1 mr-1 mb-1"
                     onClick={this.addNote}
             >Submit</button>

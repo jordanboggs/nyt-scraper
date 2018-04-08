@@ -57,12 +57,6 @@ class Articles extends Component {
       });
   }
 
-  handleNoteInputChange = (event) => {
-    this.setState({
-      noteBody: event.target.value
-    })
-  }
-
   render() {
     return (
       <Container>
@@ -115,9 +109,12 @@ class Articles extends Component {
                     onClick={this.deleteArticle}
                   >Delete Article</button>
                   {article.notes.map((note) => (
-                    <Notes noteId={note} />
+                    <Notes key={note}
+                           noteId = {note} />
                   ))}
-                  <NoteForm article={article}/>
+                  <NoteForm article={article}
+                            loadSavedArticles={this.loadSavedArticles}
+                  />
                 </ArticleListItem>
               ))}
             </ArticleList>
